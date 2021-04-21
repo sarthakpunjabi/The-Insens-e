@@ -174,6 +174,8 @@ USE_TZ = True
 STATIC_URL = '/static/'
 MEDIA_URL = '/images/'
 
+
+STATIC_ROOT = os.path.normpath(os.path.join(BASE_DIR, 'staticfiles'))
 STATICFILES_DIRS = [
     BASE_DIR / 'static',
     BASE_DIR / 'insensee/build/static',
