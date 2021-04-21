@@ -24,9 +24,9 @@ import django_heroku
 SECRET_KEY = 'riuf#u=xgxz-qpzud=3cyu$l#5=#d)+ly+*mwqx3ew&4^&d8n4'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['https://insensee.herokuapp.com']
 
 
 # Application definition
@@ -86,7 +86,7 @@ SIMPLE_JWT = {
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
-    
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -177,13 +177,13 @@ STATIC_URL = '/static/'
 MEDIA_URL = '/images/'
 
 
-STATIC_ROOT = BASE_DIR / 'assets'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_DIRS = [
     BASE_DIR / 'static',
     BASE_DIR / 'insensee/build/static',
 
 ]
-MEDIA_ROOT = 'static/images'
+MEDIA_ROOT = BASE_DIR / 'static/images'
 
 CORS_ALLOWED_ORIGINS = [
     "https://example.com",
@@ -192,3 +192,6 @@ CORS_ALLOWED_ORIGINS = [
 ]
 
 django_heroku.settings(locals())
+
+if os.getcwd == '/app':
+    DEBUG = False
