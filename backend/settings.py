@@ -125,11 +125,13 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'insenseeDatabase',
-        'USER': 'postgres',
-        'PASSWORD':'',
-        'HOST':'localhost',
+        'NAME': 'decg3itqr57qbr',
+        'USER': 'cxumehmitfhjzq',
+        'PASSWORD':'9674b3ecbcfe6bf243ed1556173d126172a68e8a1ec9537d1df6910261244379',
+        'HOST':'ec2-52-21-153-207.compute-1.amazonaws.com',
         'PORT':'5432',
+        'URI':'postgres://cxumehmitfhjzq:9674b3ecbcfe6bf243ed1556173d126172a68e8a1ec9537d1df6910261244379@ec2-52-21-153-207.compute-1.amazonaws.com:5432/decg3itqr57qbr',
+        
 
     }
 }
@@ -175,7 +177,7 @@ STATIC_URL = '/static/'
 MEDIA_URL = '/images/'
 
 
-STATIC_ROOT = os.path.normpath(os.path.join(BASE_DIR, 'staticfiles'))
+STATIC_ROOT = BASE_DIR / 'assets'
 STATICFILES_DIRS = [
     BASE_DIR / 'static',
     BASE_DIR / 'insensee/build/static',
