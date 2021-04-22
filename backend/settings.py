@@ -102,7 +102,7 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            os.path.join(BASE_DIR,'insensee/build')
+            os.path.join(BASE_DIR, 'insensee/build')
         ],
         'APP_DIRS': True,
         'OPTIONS': {
