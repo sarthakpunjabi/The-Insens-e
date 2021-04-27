@@ -121,7 +121,7 @@ function OrderScreen({match}) {
                                                     </Col>
 
                                                     <Col md={4}>
-                                                        {item.qty} X &#8377;{item.price} = &#8377;{(item.qty * item.price).toFixed(2)}
+                                                        {item.qty} X ₹{item.price} = ₹{(item.qty * item.price).toFixed(2)}
                                                     </Col>
                                                 </Row>
                                             </ListGroup.Item>
@@ -143,7 +143,7 @@ function OrderScreen({match}) {
                                             <Col>
                                                 Item : 
                                             </Col>
-                                            <Col>&#8377;{order.itemsPrice}</Col>
+                                            <Col>₹{order.itemsPrice}</Col>
                                         </Row>
                                     </ListGroup.Item>
                                     <ListGroup.Item>
@@ -151,7 +151,7 @@ function OrderScreen({match}) {
                                             <Col>
                                                 shipping : 
                                             </Col>
-                                            <Col>&#8377;{order.shippingPrice}</Col>
+                                            <Col>₹{order.shippingPrice}</Col>
                                         </Row>
                                     </ListGroup.Item>
 
@@ -160,7 +160,7 @@ function OrderScreen({match}) {
                                             <Col>
                                                 tax : 
                                             </Col>
-                                            <Col>&#8377;{order.taxPrice}</Col>
+                                            <Col>₹{order.taxPrice}</Col>
                                         </Row>
                                     </ListGroup.Item>
 
@@ -169,7 +169,7 @@ function OrderScreen({match}) {
                                             <Col>
                                                 Total : 
                                             </Col>
-                                            <Col>&#8377;{order.totalPrice}</Col>
+                                            <Col>₹{order.totalPrice}</Col>
                                         </Row>
                                     </ListGroup.Item>
 

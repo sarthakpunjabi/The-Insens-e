@@ -71,7 +71,7 @@ function ProductScreen({match,history}) {
                             <Rating value={product.rating} text={`${product.numReviews}`} color={'#f8e825'} />
                         </ListGroup.Item>
                         <ListGroup.Item>
-                            Price : &#8377;{product.price}
+                            Price : ₹{product.price}
                         </ListGroup.Item>
                         <ListGroup.Item>
                             description :  {product.description}
@@ -86,7 +86,7 @@ function ProductScreen({match,history}) {
                                     Price :
                                 </Col>
                                 <Col>
-                                    <strong>&#8377;{product.price}</strong>
+                                    <strong>₹{product.price}</strong>
                                 </Col>
                             </Row>
                         </ListGroup.Item>
