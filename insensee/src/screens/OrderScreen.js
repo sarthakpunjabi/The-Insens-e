@@ -29,7 +29,7 @@ function OrderScreen({match}) {
     const addPayPalScript = () => {
         const script = document.createElement('script')
         script.type = 'text/javascript'
-        script.src = "https://www.paypal.com/sdk/js?client-id=sb"
+        script.src = "https://www.paypal.com/sdk/js?client-id=AUKC3hiYaH2eORQb7Bv14cv1jdtNNhb4SzCNSaqa7MKR9NO27yvHPM7XuJgt8w9_qWjHYYe41512dGSp"
         script.async = true
         script.onload = () =>{
             setSdkReady(true)
