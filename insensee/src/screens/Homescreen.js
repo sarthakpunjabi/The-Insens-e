@@ -22,7 +22,7 @@ function Homescreen({history}){
       
     return (
         <div>
-            <h1>Latest products (Updated) </h1>
+            <h1>Latest products</h1>
             {loading?<Loader/>:error?<Message variant="danger">{error}</Message>:
             
             <Row>
