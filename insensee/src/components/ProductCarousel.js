@@ -26,7 +26,7 @@ function ProductCarousel() {
                             <Image src={product.image} alt={product.name} fluid />
                             <Carousel.Caption className='carousel.caption'>
                             <h4>
-                                {product.name}(₹{product.price})
+                                {product.name}
                             </h4>
                             </Carousel.Caption>
                         </Link>
