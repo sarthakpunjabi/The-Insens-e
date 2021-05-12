@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'storages',
     'corsheaders',
     'base.apps.BaseConfig',
 ]
@@ -181,15 +182,25 @@ STATICFILES_DIRS = [
     BASE_DIR / 'insensee/build/static',
 
 ]
-MEDIA_ROOT = BASE_DIR / 'static/images'
+MEDIA_ROOT = 'static/images'
 
-CORS_ALLOWED_ORIGINS = [
-    "https://example.com",
-    "http://127.0.0.1:3000",
-    "http://localhost:3000",
-]
+CORS_ALLOWED_ALL_ORIGINS = True
+
+
+AWS_QUERYSTRING_AUTH = False
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
+
+AWS_ACCESS_KEY_ID = 'AKIA3IBJ27U5OHOGOFWU'
+AWS_SECRET_ACCESS_KEY = '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'
+AWS_STORAGE_BUCKET_NAME = 'insensee-images'
+
+
+
 
 django_heroku.settings(locals())
+
+
 
 if os.getcwd == '/app':
     DEBUG = False

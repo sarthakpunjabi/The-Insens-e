@@ -47,7 +47,7 @@ function Header() {
                         
                     </Nav>
                     <Form inline>
-                        <SearchBox/>
+                        <span><SearchBox/></span>
                     </Form>
 
                     
