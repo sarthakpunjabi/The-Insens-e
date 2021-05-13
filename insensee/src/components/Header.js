@@ -20,7 +20,7 @@ function Header() {
                 <Navbar bg="dark" expand="lg" variant="dark">
                     <Container>
                         <LinkContainer to="/">
-                        <Navbar.Brand>Insensee</Navbar.Brand>
+                        <Navbar.Brand></Navbar.Brand>
                         </LinkContainer>
                         <Navbar.Toggle aria-controls="basic-navbar-nav" />
                         <Navbar.Collapse id="basic-navbar-nav">
@@ -46,11 +46,11 @@ function Header() {
                         
                         
                     </Nav>
-                    <Form inline>
-                        <span><SearchBox/></span>
-                    </Form>
+                    {/* <Form inline> */}
+                        
+                    {/* </Form> */}
 
-                    
+                <div id="sea"><SearchBox /></div>
                 </Navbar.Collapse>
                 
                 </Container>

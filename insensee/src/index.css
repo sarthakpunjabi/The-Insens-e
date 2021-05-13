@@ -12,6 +12,29 @@ code {
     monospace;
 }
 
+div#sea{
+  height: 6em;
+  
+}
+
+div#tom{
+
+width: 100%;
+display: -webkit-inline-flex;
+display: inline-flex;
+-webkit-justify-content: center;
+justify-content: flex-end;
+-webkit-flex-direction: row;
+flex-direction: row;
+align-items: center;
+transform: translateX(720px);
+transform: translate(769px,26px);
+
+
+
+
+}
+
 h3{
   padding: 1rem;
 }
