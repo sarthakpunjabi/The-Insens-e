@@ -1,4 +1,4 @@
-import Axios from "axios";
+import axios from "axios";
 import React,{useState,useEffect} from 'react'
 import {Button ,Row,Col,ListGroup,Image,Card} from 'react-bootstrap'
 import { Link } from 'react-router-dom'
@@ -42,6 +42,7 @@ function OrderScreen({match}) {
         const script = document.createElement("script");
         script.src = "https://checkout.razorpay.com/v1/checkout.js";
         document.body.appendChild(script);
+        return new Promise.all([])
       };
 
     const showRazorpay = async () => {
@@ -52,18 +53,16 @@ function OrderScreen({match}) {
         bodyData.append("name", "name");
 
        
-        const data = await Axios({
+        const {data}= await axios({
             url: `/api/orders/payment/`,
             method: "POST",
             headers: {
               Accept: "application/json",
               "Content-Type": "application/json",
-              Authorization:`Bearer ${token}`,
+              
             },
             data: bodyData,
-          }).then((res) => {
-            return res;
-          });
+          })
 
           var options = {
             y_id: `** your razorpay public key id **`,
@@ -102,14 +101,14 @@ function OrderScreen({match}) {
           // we will send the response we've got from razorpay to the backend to validate the payment
           bodyData.append("response", JSON.stringify(response));
     
-          await Axios({
+          await axios({
             url: `api/orders/payment/success/`,
             method: "POST",
             data: bodyData,
             headers: {
                 Accept: "application/json",
                 "Content-Type": "application/json",
-                Authorization:`Bearer ${token}`,
+                
             },
           })
               .then((res) => {

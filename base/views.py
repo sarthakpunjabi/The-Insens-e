@@ -15,7 +15,6 @@ from rest_framework import status
 from datetime import datetime
 import razorpay
 import json
-import environ
 from django.views.decorators.csrf import csrf_exempt
 from django.core.paginator import Paginator,EmptyPage,PageNotAnInteger
 # Create your views here.
