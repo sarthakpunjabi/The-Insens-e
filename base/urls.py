@@ -18,7 +18,7 @@ urlpatterns = [
     path('users/register/',views.registerUser,name="register"),
     path('orders/add/',views.addOrderItems,name='orders-add'),
     path('orders/myorders/',views.getMyOrders,name='myorders'),
-    path('orders/payment/' .views.payment,name="payment razorpay"),
+    path('orders/payment/' ,views.payment,name="payment razorpay"),
     
 
     path('orders/<str:pk>/',views.getOrderById,name='user-order'),
