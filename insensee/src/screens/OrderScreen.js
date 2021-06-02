@@ -42,7 +42,7 @@ function OrderScreen({match}) {
         const script = document.createElement("script");
         script.src = "https://checkout.razorpay.com/v1/checkout.js";
         document.body.appendChild(script);
-        return new Promise.all([])
+        // return new Promise.all([])
       };
 
     const showRazorpay = async () => {
@@ -63,16 +63,16 @@ function OrderScreen({match}) {
             },
             data: bodyData,
           })
-
+          console.log(data)
           var options = {
-            y_id: `** your razorpay public key id **`,
-            key_secret: `** your razorpay secret key id **`,
+            key: `rzp_test_SvwsfEkrOWUFr8`,
+            key_secret: ``,
             amount: order.totalPrice,
             currency: "INR",
             name: "Insensee",
             description: "Test teansaction",
             image: "", // add image url
-            order_id: Number(orderId),
+            order_id: data.id,
             handler: function (response) {
                 // we will handle success by calling handlePayment method and
                 // will pass the response that we've got from razorpay

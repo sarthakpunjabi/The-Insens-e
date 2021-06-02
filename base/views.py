@@ -247,23 +247,24 @@ def getTopProducts(request):
 def payment(request):
     user = request.user
     data = request.data
-    amount = data['totalprice'] * 100 #100 here means 1 dollar,1 rupree if currency INR
-    client = razorpay.Client(auth=(('razorpaykey'),('razorpaysecret')))
+    print(data)
+    amount = data['amount'] * 100 #100 here means 1 dollar,1 rupree if currency INR
+    client = razorpay.Client(auth=(('rzp_test_SvwsfEkrOWUFr8'),('gwj8X9PT95f6bsx1CuSccwgk')))
     response = client.order.create({'amount':amount,'currency':'INR','payment_capture':"1"})
-    order = Order.objects.create(
-            user = user,
-            paymentMethod = data['paymentMethod'],
-            taxPrice = data['taxPrice'],
-            shippingPrice = data['shippingPrice'],
-            totalPrice = data['totalPrice']
-        )
+    # order = Order.objects.create(
+    #         user = user,
+    #         paymentMethod = data['paymentMethod'],
+    #         taxPrice = data['taxPrice'],
+    #         shippingPrice = data['shippingPrice'],
+    #         totalPrice = data['totalPrice']
+    #     )
     print(response)
-    serializer = payorderserializer(order)
+    # serializer = payorderserializer()
     data = {
         "payment": payment,
-        "order": serializer.data
+        "order": response,
     }
-    return Response(data)
+    return Response(response)
 
 
 
