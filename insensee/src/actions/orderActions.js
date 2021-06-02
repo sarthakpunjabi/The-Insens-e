@@ -127,7 +127,7 @@ import {
         }
 
         const {data} = await axios.put(
-            `/api/orders/${id}/pay/`,
+            `/api/orders/payment/`,
             paymentResult,
             config
             )

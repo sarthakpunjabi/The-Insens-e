@@ -1,3 +1,4 @@
+import Axios from "axios";
 import React,{useState,useEffect} from 'react'
 import {Button ,Row,Col,ListGroup,Image,Card} from 'react-bootstrap'
 import { Link } from 'react-router-dom'
@@ -29,13 +30,100 @@ function OrderScreen({match}) {
     const addPayPalScript = () => {
         const script = document.createElement('script')
         script.type = 'text/javascript'
-        script.src = "https://www.paypal.com/sdk/js?client-id=AUKC3hiYaH2eORQb7Bv14cv1jdtNNhb4SzCNSaqa7MKR9NO27yvHPM7XuJgt8w9_qWjHYYe41512dGSp"
+        script.src = "https://checkout.razorpay.com/v1/checkout.js"
         script.async = true
         script.onload = () =>{
             setSdkReady(true)
         }
         document.body.appendChild(script)
     }
+
+    const loadScript = () => {
+        const script = document.createElement("script");
+        script.src = "https://checkout.razorpay.com/v1/checkout.js";
+        document.body.appendChild(script);
+      };
+
+    const showRazorpay = async () => {
+        const res = await loadScript();
+
+        let bodyData = new FormData();
+        bodyData.append("amount", order.totalPrice.toString());
+        bodyData.append("name", "name");
+
+       
+        const data = await Axios({
+            url: `/api/orders/payment/`,
+            method: "POST",
+            headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json",
+              Authorization:`Bearer ${token}`,
+            },
+            data: bodyData,
+          }).then((res) => {
+            return res;
+          });
+
+          var options = {
+            y_id: `** your razorpay public key id **`,
+            key_secret: `** your razorpay secret key id **`,
+            amount: order.totalPrice,
+            currency: "INR",
+            name: "Insensee",
+            description: "Test teansaction",
+            image: "", // add image url
+            order_id: Number(orderId),
+            handler: function (response) {
+                // we will handle success by calling handlePayment method and
+                // will pass the response that we've got from razorpay
+                handlePaymentSuccess(response);
+              },
+              prefill: {
+                name: "user's Name",
+                email: "User's email",
+                contact: "User's phone",
+              },
+              notes: {
+                address: "Razorpay Corporate Office",
+              },
+              theme: {
+                color: "#3399cc",
+              },
+        }
+        var rzp1 = new window.Razorpay(options);
+        rzp1.open();
+    }
+
+    const handlePaymentSuccess = async (response) => {
+        try {
+          let bodyData = new FormData();
+    
+          // we will send the response we've got from razorpay to the backend to validate the payment
+          bodyData.append("response", JSON.stringify(response));
+    
+          await Axios({
+            url: `api/orders/payment/success/`,
+            method: "POST",
+            data: bodyData,
+            headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json",
+                Authorization:`Bearer ${token}`,
+            },
+          })
+              .then((res) => {
+                console.log("Everything is OK!");
+                // setName("");
+                // setAmount("");
+              })
+              .catch((err) => {
+                console.log(err);
+              });
+        } catch (error) {
+          console.log(console.error());
+        }
+      };    
     
     useEffect(()=>{
         if(!order || successPay|| order._id !== Number(orderId)){
@@ -176,14 +264,9 @@ function OrderScreen({match}) {
                                     {!order.isPaid && (
                                         <ListGroup.Item>
                                             {loadingPay && <Loader/>}
-                                            {!sdkReady ? (
-                                                <Loader/>
-                                            ):(
-                                                <PayPalButton
-                                                amount={order.totalPrice}
-                                                onSuccess = {successPaymentHandler}
-                                                />
-                                            )}
+                                            <button onClick={showRazorpay} className="btn btn-primary btn-block">
+                                                Pay with razorpay
+                                            </button>
                                         </ListGroup.Item>
                                     )}
 

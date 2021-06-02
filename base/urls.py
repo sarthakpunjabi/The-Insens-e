@@ -19,7 +19,7 @@ urlpatterns = [
     path('orders/add/',views.addOrderItems,name='orders-add'),
     path('orders/myorders/',views.getMyOrders,name='myorders'),
     path('orders/payment/' ,views.payment,name="payment razorpay"),
-    
+    path('orders/payment/success/', views.handle_payment_success, name="payment_success"),
 
     path('orders/<str:pk>/',views.getOrderById,name='user-order'),
     path('orders/<str:pk>/pay/',views.updateOrderToPaid,name='pay'),

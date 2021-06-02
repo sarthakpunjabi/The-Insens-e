@@ -90,3 +90,11 @@ class OrderSerializer(serializers.ModelSerializer):
         user = obj.user
         serializer = UserSerializer(user,many=False)
         return serializer.data
+
+class payorderserializer(serializers.ModelSerializer):
+    order_date = serializers.DateTimeField(format="%d %B %Y %I : %M %p")
+
+    class Meta:
+        model = Order
+        fields = '__all__'
+        depth = 2

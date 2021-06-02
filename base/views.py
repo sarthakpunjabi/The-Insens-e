@@ -6,7 +6,7 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view,permission_classes
 from rest_framework.permissions import IsAuthenticated,IsAdminUser
 from .models import Product,Order,OrderItem,ShippingAddress,Review
-from .serializer import ProductSerializer,UserSerializer,UserSerializerWithToken,OrderSerializer
+from .serializer import ProductSerializer,UserSerializer,UserSerializerWithToken,OrderSerializer,payorderserializer
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
 from django.contrib.auth.models import User
@@ -14,6 +14,8 @@ from django.contrib.auth.hashers import make_password
 from rest_framework import status
 from datetime import datetime
 import razorpay
+import json
+import environ
 from django.views.decorators.csrf import csrf_exempt
 from django.core.paginator import Paginator,EmptyPage,PageNotAnInteger
 # Create your views here.
@@ -244,17 +246,92 @@ def getTopProducts(request):
 
 @api_view(['POST'])
 def payment(request):
+    user = request.user
     data = request.data
     amount = data['totalprice'] * 100 #100 here means 1 dollar,1 rupree if currency INR
     client = razorpay.Client(auth=(('razorpaykey'),('razorpaysecret')))
-    response = client.order.create({'amount':amount,'currency':'INR','payment_capture':1})
+    response = client.order.create({'amount':amount,'currency':'INR','payment_capture':"1"})
+    order = Order.objects.create(
+            user = user,
+            paymentMethod = data['paymentMethod'],
+            taxPrice = data['taxPrice'],
+            shippingPrice = data['shippingPrice'],
+            totalPrice = data['totalPrice']
+        )
     print(response)
-    context = {'response':response}
-    return Response(context)
+    serializer = payorderserializer(order)
+    data = {
+        "payment": payment,
+        "order": serializer.data
+    }
+    return Response(data)
 
 
+
+@api_view(['POST'])
+def handle_payment_success(request):
+    # request.data is coming from frontend
+    res = json.loads(request.data["response"])
+
+    """res will be:
+    {'razorpay_payment_id': 'pay_G3NivgSZLx7I9e', 
+    'razorpay_order_id': 'order_G3NhfSWWh5UfjQ', 
+    'razorpay_signature': '76b2accbefde6cd2392b5fbf098ebcbd4cb4ef8b78d62aa5cce553b2014993c0'}
+    """
+
+    ord_id = ""
+    raz_pay_id = ""
+    raz_signature = ""
+
+    # res.keys() will give us list of keys in res
+    for key in res.keys():
+        if key == 'razorpay_order_id':
+            ord_id = res[key]
+        elif key == 'razorpay_payment_id':
+            raz_pay_id = res[key]
+        elif key == 'razorpay_signature':
+            raz_signature = res[key]
+
+    # get order by payment_id which we've created earlier with isPaid=False
+    order = Order.objects.get(order_payment_id=ord_id)
+
+    data = {
+        'razorpay_order_id': ord_id,
+        'razorpay_payment_id': raz_pay_id,
+        'razorpay_signature': raz_signature
+    }
+
+    client = razorpay.Client(auth=(('PUBLIC_KEY'), ('SECRET_KEY')))
+
+    # checking if the transaction is valid or not if it is "valid" then check will return None
+    check = client.utility.verify_payment_signature(data)
+
+    if check is not None:
+        print("Redirect to error url or error page")
+        return Response({'error': 'Something went wrong'})
+
+    # if payment is successful that means check is None then we will turn isPaid=True
+    order.isPaid = True
+    order.save()
+
+    res_data = {
+        'message': 'payment successfully received!'
+    }
+
+    return Response(res_data)
+    
 # @csrf_exempt
 # def payment_success(request):
 #     if request.method =="POST":
 #         print(request.POST)
 #         return HttpResponse("Done payment hurrey!")
+
+'''
+{!sdkReady ? (
+                                                <Loader/>
+                                            ):(
+                                                <PayPalButton
+                                                amount={order.totalPrice}
+                                                onSuccess = {successPaymentHandler}
+                                                />
+                                            )}'''
