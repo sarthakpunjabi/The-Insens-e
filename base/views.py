@@ -13,6 +13,8 @@ from django.contrib.auth.models import User
 from django.contrib.auth.hashers import make_password
 from rest_framework import status
 from datetime import datetime
+import razorpay
+from django.views.decorators.csrf import csrf_exempt
 from django.core.paginator import Paginator,EmptyPage,PageNotAnInteger
 # Create your views here.
 
@@ -239,3 +241,20 @@ def getTopProducts(request):
     products = Product.objects.filter(rating__gte = 4).order_by('-rating')[0:5]
     serializer = ProductSerializer(products,many=True)
     return Response(serializer.data)
+
+@api_view(['POST'])
+def payment(request):
+    data = request.data
+    amount = data['totalprice'] * 100 #100 here means 1 dollar,1 rupree if currency INR
+    client = razorpay.Client(auth=(('razorpaykey'),('razorpaysecret')))
+    response = client.order.create({'amount':amount,'currency':'INR','payment_capture':1})
+    print(response)
+    context = {'response':response}
+    return Response(context)
+
+
+# @csrf_exempt
+# def payment_success(request):
+#     if request.method =="POST":
+#         print(request.POST)
+#         return HttpResponse("Done payment hurrey!")
