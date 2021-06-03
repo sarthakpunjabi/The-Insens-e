@@ -263,9 +263,9 @@ function OrderScreen({match}) {
                                     {!order.isPaid && (
                                         <ListGroup.Item>
                                             {loadingPay && <Loader/>}
-                                            <button onClick={showRazorpay} className="btn btn-primary btn-block">
+                                            <a href="https://wa.me/c/918699643438"><button className="btn btn-primary btn-block">
                                                 Pay with razorpay
-                                            </button>
+                                            </button></a>
                                         </ListGroup.Item>
                                     )}
 
