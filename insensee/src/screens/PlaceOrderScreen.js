@@ -160,14 +160,14 @@ function PlaceOrderScreen({history}) {
                                     </ListGroup.Item>
 
                                     <ListGroup.Item>
-                                        <Button
+                                        <a href="https://wa.me/c/918699643438"><Button
                                             type='button'
                                             className='btn-block'
                                             disabled={cart.cartItems===0}
-                                            onClick={placeOrder}
+                                            // onClick={placeOrder}
                                         >
-                                            Place Order
-                                        </Button>
+                                            Select size and pay on whatsapp
+                                        </Button></a>
                                     </ListGroup.Item>
                         </ListGroup>
                     </Card>
