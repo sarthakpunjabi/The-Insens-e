@@ -5,6 +5,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  
 }
 
 code {
@@ -16,7 +17,12 @@ div#sea{
   height: 6em;
   
 }
-
+.brand{
+  color:white;
+}
+Form{
+  color: #000;
+}
 div#tom{
 
 width: 100%;
@@ -48,6 +54,7 @@ main{
 h1{
   font-size: 1.8rem;
   padding: 1rem 0;
+  color: black;
 }
 h2{
   font-size: 1.4rem;

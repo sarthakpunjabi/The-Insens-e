@@ -23,7 +23,6 @@ function App() {
         <Header/>
         <main className="py-3">
           <Container>
-             <h1>THE INSENSEÉ</h1>
              <Route path='/' component={Homescreen} exact />
              <Route path='/login' component={LoginScreen}/>
              <Route path='/register' component={RegisterScreen}/>

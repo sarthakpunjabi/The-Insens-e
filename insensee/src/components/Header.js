@@ -3,6 +3,7 @@ import {useDispatch,useSelector} from 'react-redux'
 import { Navbar,Nav,Container,Row,Form,FormControl,Button,NavDropdown } from 'react-bootstrap'
 import { LinkContainer } from 'react-router-bootstrap'
 import SearchBox from './SearchBox'
+import '../index.css';
 import {logout} from '../actions/userActions'
 function Header() {
 
@@ -17,18 +18,18 @@ function Header() {
     return (
         
             <header>
-                <Navbar bg="dark" expand="lg" variant="dark">
-                    <Container>
+                <Navbar  bg="dark" expand="lg">
+                    {/* <Container> */}
                         <LinkContainer to="/">
-                        <Navbar.Brand></Navbar.Brand>
+                        <Navbar.Brand class="brand">The INSENSEÉ</Navbar.Brand>
                         </LinkContainer>
                         <Navbar.Toggle aria-controls="basic-navbar-nav" />
                         <Navbar.Collapse id="basic-navbar-nav">
                         
                         <Nav className="mr-auto">
-                        <Nav.Link href="#home">Home</Nav.Link>
+                        {/* <Nav.Link href="#home"><i className="fa fa-home"></i></Nav.Link> */}
                         <LinkContainer to="/cart">
-                            <Nav.Link ><i className="fas fa-shopping-cart">cart</i></Nav.Link>
+                            <Nav.Link ><i className="fas fa-shopping-cart"></i></Nav.Link>
                         </LinkContainer>
 
                         {userInfo ? (
@@ -40,7 +41,7 @@ function Header() {
                             </NavDropdown>
                         ): (
                             <LinkContainer to="/login">
-                            <Nav.Link ><i className="fas fa-user">login</i></Nav.Link>
+                            <Nav.Link ><i className="fas fa-user"></i></Nav.Link>
                             </LinkContainer>
                         )}
                         
@@ -50,11 +51,12 @@ function Header() {
                         
                     {/* </Form> */}
 
-                <div id="sea"><SearchBox /></div>
+                <div id="sea" className="d-flex justify-content-end"><SearchBox /></div>
                 </Navbar.Collapse>
                 
-                </Container>
+                {/* </Container> */}
                 </Navbar>
+             
             </header>
         
     )
